@@ -1,0 +1,179 @@
+body {
+	overflow: hidden;
+}
+
+#pop {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(64,64,64,0.3);
+	z-index: 99;
+	display: none;
+}
+
+
+#game {
+	position: relative;
+	top: calc(50% - 325px);
+	left: calc(50% - 578px);
+	border: 2px solid #666;
+	border-radius: 15px;
+}
+
+#container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+#loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('../images/web/loading.gif');
+	background-size: cover;
+	background-position: 50% 50%;
+	z-index: 10;
+}
+
+#form {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
+
+#form > div {
+	display: flex;
+	align-items: center;
+	margin-bottom: 32px;
+	color: #333;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#code {
+	width: 88px;
+	height: 40px;
+	text-align: center;
+	color: #01b7f9;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid #01b7f9;
+}
+
+#code::placeholder {
+	color: #87dbf9;
+}
+
+#code::-webkit-inner-spin-button {
+	display: none;
+}
+
+#init {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
+
+#init > ul > li {
+	margin: 32px 0;
+	color: #333;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#init > ul > li > span:last-child {
+	color: #01b7f9;
+}
+
+#qrcode {
+	display: none;
+	margin-bottom: 32px;
+}
+
+
+#enter {
+	color: #01b7f9;
+	font-size: 16px;
+	margin-bottom: 32px;
+}
+
+
+#tips {
+	display: none;
+}
+
+#confirm, #validate {
+	width: 160px;
+	height: 40px;
+	margin-bottom: 32px;
+	color: white;
+	font-size: 16px;
+	background-color: #01b7f9;
+	border: 2px solid #01b7f9;
+	border-radius: 8px;
+}
+
+#validate {
+	margin-bottom: 0;
+}
+
+#finish {
+	display: none;
+}
+
+#finish > div {
+	margin-top: 32px;
+	color: #01b7f9;
+	font-size: 24px;
+	text-align: center;
+}
+
+#forwards {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 32px;
+	font-size: 16px;
+	color: #01b7f9;
+}
+
+#forwards > li {
+	margin-bottom: 8px;
+}
+
+#forwards > li:last-child {
+	margin-bottom: 0;
+}
+
+#play {
+	width: 160px;
+	height: 60px;
+	margin-top: 64px;
+	color: #666;
+	font-size: 20px;
+	font-weight: 600;
+	background-color: transparent;
+	border: 2px solid #666;
+	border-radius: 15px;
+	opacity: 0.3;
+	transition: all 500ms;
+}
+
+#play:hover {
+	color: #01b7f9;
+	border-color: #01b7f9;
+	opacity: 1;
+}

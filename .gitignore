@@ -1,0 +1,8 @@
+.idea/
+logs/
+
+*.sum
+*.exe
+*.db
+run
+

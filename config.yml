@@ -1,0 +1,23 @@
+debug: true
+logpath: logs/
+
+server:
+    host: 0.0.0.0
+    port: 8888
+
+machine:
+    #在启动前配置好下面的值
+    name: Example
+    secret: B16DEFF0D65BF3D27E2A785D41175A99
+
+settings:
+    #验证有效期（单位：分钟）
+    verifyPeriod: 60
+    #限制一段时间内的验证次数（单位：分钟），对所有IP计入
+    limitPeriod: 1
+    #设置为0代表不限制（*防止密钥爆破，不建议）
+    limitTimes: 5
+
+#IP转发（外网：内网）
+forwards:
+    - 10032:3389

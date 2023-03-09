@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: tahoma,arial,Microsoft YaHei,Hiragino Sans GB,"\u5b8b\u4f53",sans-serif;
+}
+
+body {
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    font: 12px/150% tahoma,arial,Microsoft YaHei,Hiragino Sans GB,"\u5b8b\u4f53",sans-serif !important;
+    color: #282828;
+    background-color: #fff;
+	min-width: 1200px;
+}
+
+em,i {
+    font-style: normal;
+}
+
+ul,dl {
+	margin: 0;
+    padding: 0;
+}
+
+li,tt,dt,dd {
+    list-style: none;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c81623;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button,input {
+    font-family: Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5b8b\4f53,sans-serif;
+    outline: none;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+@media only screen and (max-width: 1200px) {
+	body {
+		min-width: 900px;
+	}
+}
