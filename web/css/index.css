@@ -60,6 +60,10 @@ body {
 	font-weight: bold;
 }
 
+#time {
+	color: #01b7f9;
+}
+
 #code {
 	width: 88px;
 	height: 40px;

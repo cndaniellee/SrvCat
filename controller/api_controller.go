@@ -156,7 +156,7 @@ func (c *ApiController) GetCheck() {
 		_, _ = c.Ctx.JSON(response.ServerError)
 		return
 	}
-	resp := response.CheckResp{}
+	resp := response.CheckResp{Time: time.Now().UnixMilli()}
 	verified, err := storage.Sqlite.GetVerified(ip, time.Now().Add(-time.Duration(config.Config.Settings.VerifyPeriod)*time.Minute).UnixMilli())
 	if err != nil {
 		golog.Errorf("[Api]: %v", err)

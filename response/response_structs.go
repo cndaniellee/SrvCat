@@ -20,6 +20,7 @@ type InitResp struct {
 }
 
 type CheckResp struct {
+	Time     int64    `json:"time"`
 	Exist    bool     `json:"exist"`
 	Forwards []string `json:"forwards,omitempty"`
 }

@@ -1,6 +1,27 @@
 const host = 'http://' + location.host;
 // const host = 'http://127.0.0.1:8888';
 
+Date.prototype.Format = function(fmt) {
+	var o = {
+		"M+": this.getMonth()+1,                 //月份
+		"d+": this.getDate(),                    //日
+		"h+": this.getHours(),                   //小时
+		"m+": this.getMinutes(),                 //分
+		"s+": this.getSeconds(),                 //秒
+		"q+": Math.floor((this.getMonth()+3)/3), //季度
+		"S": this.getMilliseconds()             //毫秒
+	};
+	if (/(y+)/.test(fmt)) {
+		fmt = fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+	}
+	for(var k in o) {
+		if(new RegExp("("+ k +")").test(fmt)) {
+			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length===1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+		}
+	}
+	return fmt;
+}
+
 $(document).ready(() => {
 	const pop = $('#pop');
 	const game = $('#game');
@@ -64,7 +85,10 @@ $(document).ready(() => {
 	const finish = $('#finish');
 	const form = $('#form');
 	const forwards = $('#forwards');
-	
+	const time = $('#time');
+
+	let srvTime = 0;
+
 	const check = () => {
 		loading.show();
 		$.ajax({
@@ -80,13 +104,27 @@ $(document).ready(() => {
 								forwards.append('<li>' + forward.replace(':', '->') + '</li>')
 							}
 						} else forwards.hide();
-					} else form.css('display', 'flex');
+					} else {
+						srvTime = data.time;
+						refreshTime();
+						form.css('display', 'flex');
+					}
 				} else alert(note);
 			},
 			complete: () => loading.hide(),
 		});
 	};
-	
+
+	setInterval(() => {
+		srvTime += 1000;
+		refreshTime();
+	}, 1000)
+
+	// 更新时间显示
+	const refreshTime = () => {
+		time.text((new Date(srvTime)).Format("yyyy-MM-dd hh:mm:ss"));
+	}
+
 	const code = $('#code');
 	
 	$('#validate').on('click', () => {
