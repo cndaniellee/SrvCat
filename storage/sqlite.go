@@ -45,8 +45,9 @@ func init() {
 	util.FailOnException("An error occurred while create table init", err)
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS access (
   		"ip" TEXT(16) NOT NULL,
-  		"time" integer(10) NOT NULL,
-    	"category" integer(1) NOT NULL
+  		"time" integer(16) NOT NULL,
+    	"category" integer(1) NOT NULL,
+    	"used" integer(0) NOT NULL DEFAULT 0
 	);`)
 	util.FailOnException("An error occurred while create table access", err)
 	_, err = db.Exec(`CREATE INDEX IF NOT EXISTS ip_index ON access ("ip");`)
@@ -110,7 +111,7 @@ func (s sqlite) GetAccessCount(after int64) (int, error) {
 }
 
 func (s sqlite) GetVerified(ip string, after int64) (bool, error) {
-	stmt, err := s.db.Prepare(`SELECT * FROM access WHERE "ip" = ? AND "category" = ? AND "time" > ?`)
+	stmt, err := s.db.Prepare(`SELECT 1 FROM access WHERE "ip" = ? AND "category" = ? AND "time" > ?`)
 	defer stmt.Close()
 	if err != nil {
 		return false, err
@@ -124,4 +125,33 @@ func (s sqlite) GetVerified(ip string, after int64) (bool, error) {
 		return true, err
 	}
 	return false, nil
+}
+
+func (s sqlite) GetUnusedVerify(ip string, after int64) (bool, error) {
+	stmt, err := s.db.Prepare(`SELECT 1 FROM access WHERE "ip" = ? AND "category" = ? AND "time" > ? AND "used" = 0`)
+	defer stmt.Close()
+	if err != nil {
+		return false, err
+	}
+	rows, err := stmt.Query(ip, AccessCategoryVerified, after)
+	defer rows.Close()
+	if err != nil {
+		return false, err
+	}
+	if rows.Next() {
+		return true, err
+	}
+	return false, nil
+}
+
+func (s sqlite) UpdateUsed(ip string, after int64) error {
+	stmt, err := s.db.Prepare(`UPDATE access SET "used" = 1 WHERE "ip" = ? AND "category" = ? AND "time" > ? AND "used" = 0`)
+	defer stmt.Close()
+	if err != nil {
+		return err
+	}
+	if _, err = stmt.Exec(ip, AccessCategoryVerified, after); err != nil {
+		return err
+	}
+	return nil
 }

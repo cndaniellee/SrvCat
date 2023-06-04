@@ -96,6 +96,18 @@ func (c *ApiController) PostValidate() {
 		_, _ = c.Ctx.JSON(response.ServerError)
 		return
 	}
+	// 检查有效期内的验证
+	verified, err := storage.Sqlite.GetVerified(ip, time.Now().Add(-time.Duration(config.Config.Settings.VerifyPeriod)*time.Minute).UnixMilli())
+	if err != nil {
+		golog.Errorf("[Api]: %v", err)
+		_, _ = c.Ctx.JSON(response.ServerError)
+		return
+	}
+	if verified {
+		golog.Errorf("[Api]: Completed verify exists, ip: %v", ip)
+		_, _ = c.Ctx.JSON(response.AlreadyVerify)
+		return
+	}
 	// 检查超限
 	if config.Config.Settings.LimitTimes != 0 {
 		count, err := storage.Sqlite.GetAccessCount(time.Now().Add(-time.Duration(config.Config.Settings.LimitPeriod) * time.Minute).UnixMilli())

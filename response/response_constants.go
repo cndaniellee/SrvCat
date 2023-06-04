@@ -22,6 +22,8 @@ var InvalidParameter = Response{3000, "无效参数"}
 
 var MissingParameter = Response{3001, "参数缺失"}
 
-var ReachLimit = Response{4000, "验证次数超限"}
+var AlreadyVerify = Response{4000, "已完成过验证"}
+
+var ReachLimit = Response{4001, "验证次数超限"}
 
 var ServerError = Response{5000, "服务器错误"}
