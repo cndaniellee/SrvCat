@@ -35,24 +35,35 @@ func (c *ApiController) GetInit() {
 		return
 	}
 	resp := &response.InitResp{Init: init}
+	// 获取远端IP
+	ip, _, err := net.SplitHostPort(c.Ctx.Request().RemoteAddr)
+	if err != nil {
+		golog.Errorf("[Api]: %v", err)
+		_, _ = c.Ctx.JSON(response.ServerError)
+		return
+	}
 	if resp.Init {
-		resp.Name = config.Config.Machine.Name
-		resp.Secret = config.Config.Machine.Secret
-		if resp.Name != "" && resp.Secret != "" {
-			qr, err := qrcode.New(totp.GenerateURI(resp.Name, resp.Secret), qrcode.High)
-			if err != nil {
-				golog.Errorf("[Api]: %v", err)
-				_, _ = c.Ctx.JSON(response.ServerError)
-				return
+		if ip == "127.0.0.1" {
+			resp.Name = config.Config.Machine.Name
+			resp.Secret = config.Config.Machine.Secret
+			if resp.Name != "" && resp.Secret != "" {
+				qr, err := qrcode.New(totp.GenerateURI(resp.Name, resp.Secret), qrcode.High)
+				if err != nil {
+					golog.Errorf("[Api]: %v", err)
+					_, _ = c.Ctx.JSON(response.ServerError)
+					return
+				}
+				qr.BackgroundColor = color.Transparent
+				png, err := qr.PNG(200)
+				if err != nil {
+					golog.Errorf("[Api]: %v", err)
+					_, _ = c.Ctx.JSON(response.ServerError)
+					return
+				}
+				resp.Qrcode = "data:image/png;base64," + base64.StdEncoding.EncodeToString(png)
 			}
-			qr.BackgroundColor = color.Transparent
-			png, err := qr.PNG(200)
-			if err != nil {
-				golog.Errorf("[Api]: %v", err)
-				_, _ = c.Ctx.JSON(response.ServerError)
-				return
-			}
-			resp.Qrcode = "data:image/png;base64," + base64.StdEncoding.EncodeToString(png)
+		} else {
+			resp.Remote = true
 		}
 	}
 	_, _ = c.Ctx.JSON(response.DataResponse{Response: response.Success, Data: resp})

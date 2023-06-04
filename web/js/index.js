@@ -49,14 +49,18 @@ $(document).ready(() => {
 			const { code, data, note } = result;
 			if (code === 0) {
 				if (data.init) {
-					init.css('display', 'flex');
-					$('#name').text(data.name);
-					$('#secret').text(data.secret);
-					if (data.qrcode) {
-						$('#enter').text('使用谷歌验证器APP扫描上方二维码');
-						const qrcode = $('#qrcode');
-						qrcode.attr('src', data.qrcode);
-						qrcode.show();
+					if (data.remote) {
+						alert('远端无法进行初始化，请在本地进行操作');
+					} else {
+						init.css('display', 'flex');
+						$('#name').text(data.name);
+						$('#secret').text(data.secret);
+						if (data.qrcode) {
+							$('#enter').text('使用谷歌验证器APP扫描上方二维码');
+							const qrcode = $('#qrcode');
+							qrcode.attr('src', data.qrcode);
+							qrcode.show();
+						}
 					}
 				} else check();
 			} else alert(note);

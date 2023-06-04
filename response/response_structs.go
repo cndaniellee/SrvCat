@@ -14,6 +14,7 @@ type List struct {
 
 type InitResp struct {
 	Init   bool   `json:"init"`
+	Remote bool   `json:"remote"`
 	Name   string `json:"name,omitempty"`
 	Secret string `json:"secret,omitempty"`
 	Qrcode string `json:"qrcode,omitempty"`
