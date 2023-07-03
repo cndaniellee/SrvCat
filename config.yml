@@ -18,6 +18,8 @@ settings:
     limitPeriod: 1
     #设置为0代表不限制（*防止密钥爆破，不建议）
     limitTimes: 3
+    #仅限一次连接（RDP等可能需要多次TCP连接，不建议开启）
+    oneTimeOnly: false
 
 #IP转发（外网：内网）
 forwards:

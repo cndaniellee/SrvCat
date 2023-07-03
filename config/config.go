@@ -18,9 +18,10 @@ type config struct {
 	Forwards []string `yaml:"forwards"`
 
 	Settings struct {
-		VerifyPeriod int `yaml:"verifyPeriod"`
-		LimitPeriod  int `yaml:"limitPeriod"`
-		LimitTimes   int `yaml:"limitTimes"`
+		VerifyPeriod int  `yaml:"verifyPeriod"`
+		LimitPeriod  int  `yaml:"limitPeriod"`
+		LimitTimes   int  `yaml:"limitTimes"`
+		OneTimeOnly  bool `yaml:"oneTimeOnly"`
 	} `yaml:"settings"`
 
 	Machine struct {

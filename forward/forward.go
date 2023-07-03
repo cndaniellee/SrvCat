@@ -100,8 +100,10 @@ func handleListener(listener net.Listener, to *net.TCPAddr) {
 		if verified {
 			golog.Infof("Accept connect from ip: %s", ip)
 			go handleConnect(conn, to)
-			if err = storage.Sqlite.UpdateUsed(ip, period); err != nil {
-				golog.Errorf("Remote %s update used err: %v", conn.RemoteAddr().String(), err)
+			if config.Config.Settings.OneTimeOnly {
+				if err = storage.Sqlite.UpdateUsed(ip, period); err != nil {
+					golog.Errorf("Remote %s update used err: %v", conn.RemoteAddr().String(), err)
+				}
 			}
 			continue
 		}
